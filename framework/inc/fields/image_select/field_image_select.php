@@ -129,12 +129,6 @@ if ( ! class_exists( 'ReduxFramework_image_select' ) ) {
                                 $selected = false;
                             } else {
                                 foreach ( $v['presets'] as $pk => $pv ) {
-                                    if ( isset( $v['merge'] ) && $v['merge'] !== false ) {
-                                        if( ( $v['merge'] === true || in_array( $pk, $v['merge'] ) ) && is_array( $this->parent->options[ $pk ] ) ) {
-                                            $pv = array_merge( $this->parent->options[ $pk ], $pv );
-                                        }
-                                    }
-
                                     if ( empty( $pv ) && isset( $this->parent->options[ $pk ] ) && ! empty( $this->parent->options[ $pk ] ) ) {
                                         $selected = false;
                                     } else if ( ! empty( $pv ) && ! isset( $this->parent->options[ $pk ] ) ) {
@@ -161,20 +155,14 @@ if ( ! class_exists( 'ReduxFramework_image_select' ) ) {
 
                     $is_preset_class = $is_preset ? '-preset-' : ' ';
 
-                    $merge   = '';
-                    if ( isset( $v['merge'] ) && $v['merge'] !== false ) {
-                        $merge = is_array( $v['merge'] ) ? implode( '|', $v['merge'] ) : 'true';
-                        $merge = ' data-merge="' . htmlspecialchars( $merge, ENT_QUOTES, 'UTF-8' ) . '"';
-                    }
-
                     echo '<li class="redux-image-select">';
                     echo '<label class="' . $selected . ' redux-image-select' . $is_preset_class . $this->field['id'] . '_' . $x . '" for="' . $this->field['id'] . '_' . ( array_search( $k, array_keys( $this->field['options'] ) ) + 1 ) . '">';
 
-                    echo '<input type="radio" class="' . $this->field['class'] . '" id="' . $this->field['id'] . '_' . ( array_search( $k, array_keys( $this->field['options'] ) ) + 1 ) . '" name="' . $this->field['name'] . $this->field['name_suffix'] . '" value="' . $theValue . '" ' . checked( $this->value, $theValue, false ) . $presets . $merge . '/>';
+                    echo '<input type="radio" class="' . $this->field['class'] . '" id="' . $this->field['id'] . '_' . ( array_search( $k, array_keys( $this->field['options'] ) ) + 1 ) . '" name="' . $this->field['name'] . $this->field['name_suffix'] . '" value="' . $theValue . '" ' . checked( $this->value, $theValue, false ) . $presets . '/>';
                     if ( ! empty( $this->field['tiles'] ) && $this->field['tiles'] == true ) {
                         echo '<span class="tiles" style="background-image: url(' . $v['img'] . ');" rel="' . $v['img'] . '"">&nbsp;</span>';
                     } else {
-                        echo '<img src="' . $v['img'] . '" alt="' . $v['alt'] . '" style="' . $style . '"' . $presets . $merge . ' />';
+                        echo '<img src="' . $v['img'] . '" alt="' . $v['alt'] . '" style="' . $style . '"' . $presets . ' />';
                     }
 
                     if ( $v['title'] != '' ) {

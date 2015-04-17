@@ -194,20 +194,14 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
          * @access      public
          * @return      void
          */
-        public static function adminNotices($notices = array()) {
+        public static function adminNotices() {
             global $current_user, $pagenow;
 
             // Check for an active admin notice array
-            if ( ! empty( $notices ) ) {
+            if ( ! empty( self::$_parent->admin_notices ) ) {
 
                 // Enum admin notices
-                foreach ( $notices as $notice ) {
-                    
-                    $add_style = '';
-                    if (strpos($notice['type'], 'redux-message') != false) {
-                        $add_style = 'style="border-left: 4px solid ' . $notice['color'] . '!important;"';
-                    }
-                    
+                foreach ( self::$_parent->admin_notices as $notice ) {
                     if ( true == $notice['dismiss'] ) {
 
                         // Get user ID
@@ -234,12 +228,12 @@ if ( ! class_exists( 'Redux_Functions' ) ) {
                             }
 
                             // Print the notice with the dismiss link
-                            echo '<div ' . $add_style . ' class="' . $notice['type'] . '"><p>' . $notice['msg'] . '&nbsp;&nbsp;<a href="?dismiss=true&amp;id=' . $notice['id'] . $pageName . $curTab . '">' . __( 'Dismiss', 'redux-framework' ) . '</a>.</p></div>';
+                            echo '<div class="' . $notice['type'] . '"><p>' . $notice['msg'] . '&nbsp;&nbsp;<a href="?dismiss=true&amp;id=' . $notice['id'] . $pageName . $curTab . '">' . __( 'Dismiss', 'redux-framework' ) . '</a>.</p></div>';
                         }
                     } else {
 
                         // Standard notice
-                        echo '<div ' . $add_style . ' class="' . $notice['type'] . '"><p>' . $notice['msg'] . '</a>.</p></div>';
+                        echo '<div class="' . $notice['type'] . '"><p>' . $notice['msg'] . '</a>.</p></div>';
                     }
                 }
 

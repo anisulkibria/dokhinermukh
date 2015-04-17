@@ -40,6 +40,7 @@
                     'click', function( e ) {
                         e.preventDefault();
                         redux.field_objects.background.removeImage( $( this ).parents( '.redux-container-background:first' ) );
+                        redux.field_objects.background.preview( $( this ) );
                         return false;
                     }
                 );
