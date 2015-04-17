@@ -135,4 +135,13 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Load Jetpack compatibility file.
  */
+
 require get_template_directory() . '/inc/jetpack.php';
+
+if ( !class_exists( 'ReduxFramework' ) ) {
+    require_once( dirname( __FILE__ ) . '/framework/framework.php' );
+}
+
+if ( !isset( $redux_demo ) ) {
+    require_once( dirname( __FILE__ ) . '/admin/admin_setting.php' );
+}
